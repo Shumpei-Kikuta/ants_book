@@ -47,7 +47,7 @@ int main(){
     long int left = X[0];
     long int right = X[N - 1];
     for (int i = 0; i < 100; i++){
-        long int mid = (right - left);
+        long int mid = (right + left) / 2;
         if (is_short(right, mid)){
             left = mid;
         }else{
