@@ -7,7 +7,7 @@ int n, m, M;
 int dp[MAX_M+1][MAX_n+1] = {};
 int main(){
     cin >> n >> m >> M;
-    for (int i = 1; i <= n; i++){
+    for (int i = 1; i <= n;ni++){
         for (int j = 0; j <= m; j++){
             if (j == 0){
                 dp[j][1] = 1;

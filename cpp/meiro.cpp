@@ -40,7 +40,10 @@ int main(){
     Q.push(now);
     while ((!Q.empty())){
         now = Q.front();
+        Q.pop();
+        //cout << now.x << ' ' << now.y << endl;
         matrix[now.x][now.y] = now.num;
+        //cout << matrix[now.x][now.y] << endl;
         if (( now.x== gx) && (now.y == gy)){
             cout << now.num << endl;
             break;
@@ -59,7 +62,6 @@ int main(){
                 }
             }
         }
-        Q.pop();
     }
     // for (int i = 0; i <= H + 1; i++){
     //     for (int j = 0; j <= W + 1; j++){
