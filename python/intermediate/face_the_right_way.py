@@ -1,13 +1,8 @@
 # 頭がこんがらがる。
 # 境界条件が曖昧な時はwhileで問いた方が良い
 
-import numpy as np
-import math
-import sys
-sys.setrecursionlimit(10000000)
-
-
 INF = 10000
+
 
 def solve(A: list, k: int):
     """
@@ -29,7 +24,7 @@ def solve(A: list, k: int):
             rev_num += 1
             G[i] = 1
         sum_ = (sum_ + G[i]) % 2
-    
+
     for i in range(N - k + 1, N):
         sum_ = (sum_ + G[i - k]) % 2
         if (A[i] + sum_) % 2 == 0:
@@ -50,7 +45,7 @@ def main():
             A.append(1)  # 後ろ向きなら1
         else:
             A.append(0)  # 前向きなら0
-    
+
     M = sum(A)
     min_k = 1
     for k in range(2, N+1):
@@ -58,7 +53,7 @@ def main():
         if m < M:
             min_k = k
             M = m
-    
+
     print(M, min_k)
 
 
