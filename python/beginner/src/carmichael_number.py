@@ -1,7 +1,3 @@
-import numpy as np
-import math
-
-
 def factorial_devided_n(x: int, n: int, mod: int):
     res = 1
     while n > 0:
