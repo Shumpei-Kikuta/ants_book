@@ -17,9 +17,9 @@ def main():
         v_, w_ = map(int, input().split())
         V[i] = v_
         W[i] = w_
-    
+
     n2 = n // 2
-    
+
     list1 = [None] * (2 ** n2)
     for i in range(1 << n2):
         sum_v = 0
@@ -29,7 +29,7 @@ def main():
                 sum_v += V[j]
                 sum_w += W[j]
         list1[i] = (sum_w, sum_v)
-    
+
     list2 = [None] * (2 ** (n-n2))
     for i in range(1 << (n-n2)):
         sum_v = 0
