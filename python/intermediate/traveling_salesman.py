@@ -7,7 +7,7 @@ INF = 100000000
 V, E = map(int, input().split())
 adjacency_matrix = []
 for i in range(V):
-    adjacency_matrix.append([-1] * V)
+    adjacency_matrix.append([INF] * V)
 for i in range(E):
     from_, to_, d = map(int, input().split())
     adjacency_matrix[from_][to_] = d
@@ -21,25 +21,29 @@ def solve(S, v):
     S: set for the nodes already visited
     v: current node
     """
-    V = len(adjacency_matrix)
     if dp[S][v] >= 0:
         # already visited
         return dp[S][v]
-    if S == (V << 1) - 1 and v == 0:
+    elif S == (1 << V) - 1 and v == 0:
         # already visited the all places and now place is the goal
         dp[S][v] = 0
         return dp[S][v]
-    res = INF
-    for u in range(V):
-        if not ((S >> u) & 1):
-            # never been to u
-            res = min(res, solve(S | (1 << u), u))
-    dp[S][v] = res
-    return res
+    else:
+        res = INF
+        for u in range(V):
+            if not ((S >> u) & 1):
+                # never been to u
+                res = min(res, solve(S | (1 << u), u) + adjacency_matrix[v][u])
+        dp[S][v] = res
+        return dp[S][v]
 
 
-def main():        
-    print(solve(0, 0))
+def main():
+    if solve(0, 0) >= INF:
+        print(-1)
+    else:
+        print(solve(0, 0))
+    # print(dp)
     
 
 if __name__ == '__main__':
