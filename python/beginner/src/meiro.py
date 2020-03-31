@@ -15,16 +15,15 @@ def main():
         input_ = input()
         for j, v in enumerate(input_):
             if v == '.':
-                meiros[i + 1][j + 1] = 0
+                meiros[i + 1][j + 1] = INF
             elif v == '#':
                 meiros[i + 1][j + 1] = -1
             elif v == 'S':
                 meiros[i + 1][j + 1] = 0
-                d[i + 1][j + 1] = 0
                 S = (i + 1, j + 1)
             else:
                 G = (i + 1, j + 1)
-                meiros[i + 1][j + 1] = 0
+                meiros[i + 1][j + 1] = INF
 
     queue = deque()
     queue.append(S)
@@ -32,15 +31,15 @@ def main():
     while(len(queue) != 0):
         now = queue.popleft()
         if now == G:
-            print(d[now[0]][now[1]])
-            # break
+            print(meiros[now[0]][now[1]])
+            break
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if (i + j) % 2 == 0:
                     continue
-                if d[now[0] + i][now[1] + j] == INF and meiros[now[0] + i][now[1] + j] != -1:
+                if meiros[now[0] + i][now[1] + j] == INF:
                     queue.append((now[0] + i, now[1] + j))
-                    d[now[0] + i][now[1] + j] = d[now[0]][now[1]] + 1
+                    meiros[now[0] + i][now[1] + j] = meiros[now[0]][now[1]] + 1
 
 
 if __name__ == '__main__':
