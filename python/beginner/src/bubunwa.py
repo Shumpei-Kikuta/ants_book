@@ -2,25 +2,47 @@ import sys
 sys.setrecursionlimit(10000000)
 
 
-def rec(A, n, k, sum_, cnt):
-    if sum_ == k:
-        return True
-    elif cnt < n:
-        return rec(A, n, k, sum_ + A[cnt], cnt + 1) | rec(A, n, k, sum_, cnt + 1)
-    else:
-        return False
+import sys
+sys.setrecursionlimit(10000000)
 
 
+# 1. 再帰関数
+# def main():
+#     n = int(input())
+#     a = [int(c) for c in input().split()]
+#     k = int(input())
+#     def rec(sum_, idx):
+#         if idx == n:
+#             if sum_ == k:
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             return rec(sum_+a[idx], idx+1) | rec(sum_, idx+1)
+
+#     if rec(0, 0):
+#         print('Yes')
+#     else:
+#         print('No')
+
+# 1. 再帰関数
 def main():
     n = int(input())
-    A = [int(a) for a in input().split()]
+    a = [int(c) for c in input().split()]
     k = int(input())
-
-    if rec(A, n, k, 0, 0):
-        print('Yes')
+    for i in range(1 << n):
+        sum_ = 0
+        for j in range(n):
+            if (i >> j) & 1:
+                sum_ += a[j]
+        if sum_ == k:
+            print('Yes')
+            sys.exit()
     else:
         print('No')
 
 
+
 if __name__ == '__main__':
     main()
+
