@@ -1,3 +1,8 @@
+'''
+ダイクストラ法
+正の重みしか存在しない場合。O(ElogV)
+'''
+
 import sys
 sys.setrecursionlimit(10000000)
 from heapq import heapify, heappop, heappush
