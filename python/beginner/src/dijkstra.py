@@ -28,7 +28,7 @@ def main():
     alreadys.add(now)
     d = [0] + [INF] * (N - 1)
     heappush(priority_queue, (0, 0))
-    while(len(priority_queue) != 0):
+    while(len(alreadys) != N):
         _, now = heappop(priority_queue)
         alreadys.add(now)
         edges = adj_lists[now]
