@@ -1,60 +1,51 @@
-# 頭がこんがらがる。
-# 境界条件が曖昧な時はwhileで問いた方が良い
+import sys
+sys.setrecursionlimit(10000000)
+import numpy as np
+from heapq import heapify, heappop, heappush
+import copy
+from math import gcd, ceil
+from collections import deque
+# queueとして使う場合 push, popleftを使う
+from bisect import bisect_left, bisect_right
+# bisect_left: 配列の順序関係が崩れない条件で挿入することができる一番左の点
+# bisect_right: 配列の順序関係が崩れない条件で挿入することができる一番右の点
+# A = [1, 1, 1, 2, 2, 2, 4]
+# print(bisect_left(A, 2))  # 3
+# print(bisect_right(A, 2))  # 6
+# print(bisect_left(A, 3))  # 6
+# print(bisect_right(A, 3))  # 6
 
-INF = 10000
-
-
-def solve(A: list, k: int):
-    """
-    k頭連続反転するとき、必要な最小操作回数。
-    達成できないならば、INFを返す
-    """
-    N = len(A)
-    G = [0] * N
-    sum_ = 0  # i番目を反転させた回数
-    rev_num = 0
-
-    for i in range(0, N - k + 1):
-        if i - k >= 0:
-            sum_ = (sum_ + G[i - k]) % 2
-
-        if (A[i] + sum_) % 2 == 0:
-            G[i] = 0
-        else:
-            rev_num += 1
-            G[i] = 1
-        sum_ = (sum_ + G[i]) % 2
-
-    for i in range(N - k + 1, N):
-        sum_ = (sum_ + G[i - k]) % 2
-        if (A[i] + sum_) % 2 == 0:
-            pass
-        else:
-            return INF
-    return rev_num
-
+INF = 10**10
 
 def main():
     N = int(input())
-    string = input()
-
-    # Aの初期化
-    A = []
-    for i in string:
-        if i == "B":
-            A.append(1)  # 後ろ向きなら1
-        else:
-            A.append(0)  # 前向きなら0
-
-    M = sum(A)
-    min_k = 1
-    for k in range(2, N+1):
-        m = solve(A, k)
-        if m < M:
+    maps ={'B': 1, "F": 0}
+    lists = [maps[c] for c in input()]
+    min_num = INF
+    min_k = INF
+    for k in range(1, N+1):
+        dp = [0] * N  # 累積リスト、k番目までで返された回数
+        num = 0
+        for i in range(N-k+1):
+            if i == 0:
+                dp[i] = lists[i]
+                num += lists[i]
+                continue
+            if i - k < 0:
+                dp[i] = dp[i-1] + (dp[i - 1] + lists[i]) % 2
+                num += 1 if (dp[i - 1] + lists[i]) % 2 == 1 else 0
+            else:
+                dp[i] = dp[i-1] + (dp[i-1] - dp[i - k] + lists[i]) % 2
+                num += 1 if (dp[i-1] - dp[i - k] + lists[i]) % 2 == 1 else 0
+        flag = True
+        for i in range(N-k+1, N):
+            if (dp[N-k] - dp[i - k] + lists[i]) % 2 == 0:
+                continue
+            else:
+                flag = False
+        if flag and min_num > num:
+            min_num = num
             min_k = k
-            M = m
-
-    print(M, min_k)
 
 
 if __name__ == '__main__':
